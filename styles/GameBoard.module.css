@@ -1,0 +1,31 @@
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style-type: none;
+  padding: 0;
+}
+
+.card-grid button {
+  all: unset;
+  background: #fc7b2a;
+  padding: 1rem;
+  height: 4rem;
+  width: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  box-shadow: 0.4rem 0.4rem 0.4rem rgba(0, 0, 0, 0.2);
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}

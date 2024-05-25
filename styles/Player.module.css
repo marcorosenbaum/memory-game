@@ -1,0 +1,18 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.span {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: solid 1px rgb(48, 48, 48);
+  width: 10rem;
+  background: #ffd83b;
+}
+
+.editable {
+  background-color: rgb(253, 223, 162);
+}

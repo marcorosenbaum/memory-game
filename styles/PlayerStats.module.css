@@ -1,0 +1,15 @@
+.player-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 4rem;
+}
+
+.player-container div {
+  width: 50%;
+}
+
+.player-container h1 {
+  transition: 500ms;
+  text-align: center;
+}

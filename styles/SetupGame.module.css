@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  gap: 1rem;
+}
+
+.list-item {
+  list-style-type: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: solid 1px rgb(118, 118, 118);
+  background-color: #ffd83b;
+  cursor: pointer;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0;
+}
+
+.cards input {
+  all: unset;
+}
+
+.selected {
+  background-color: #ff9b06;
+}
