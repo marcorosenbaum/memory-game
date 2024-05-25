@@ -47,6 +47,5 @@ export async function getStaticProps() {
     props: {
       dataFromMongoDB: JSON.parse(JSON.stringify(data)),
     },
-    revalidate: 10,
   };
 }
