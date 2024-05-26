@@ -39,7 +39,18 @@ export default function Start({ dataFromMongoDB }) {
   );
 }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+//   const db = await connectToDatabase();
+//   const data = await db.collection("cards").find({}).toArray();
+
+//   return {
+//     props: {
+//       dataFromMongoDB: JSON.parse(JSON.stringify(data)),
+//     },
+//   };
+// }
+
+export async function getServerSideProps() {
   const db = await connectToDatabase();
   const data = await db.collection("cards").find({}).toArray();
 
