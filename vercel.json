@@ -1,6 +1,6 @@
 {
   "functions": {
-    "lib/**/*.js": {
+    "lib/mongodb.js": {
       "maxDuration": 60
     }
   }
