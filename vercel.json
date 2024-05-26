@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/**/*.js": {
+    "lib/**/*.js": {
       "runtime": "nodejs14.x",
       "maxDuration": 60
     }
