@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "lib/mongodb.js": {
-      "maxDuration": 60
-    }
-  }
-}
