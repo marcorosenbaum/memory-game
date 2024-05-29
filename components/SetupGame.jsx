@@ -17,6 +17,7 @@ export default function SetupGame() {
     currentPlayer,
     setCurrentPlayer,
     players,
+    restartGame,
   } = useContext(GameContext);
 
   const englishCards = useMemo(
@@ -71,14 +72,16 @@ export default function SetupGame() {
   }
 
   function handleStartGame() {
-    setCurrentPlayer(
-      currentPlayer.name === players.player1.name
-        ? players.player2
-        : players.player1
-    );
+    // setCurrentPlayer(
+    //   currentPlayer.name === players.player1.name
+    //     ? players.player2
+    //     : players.player1
+    // );
     setSelectedCards((prev) => [
       ...createShuffledCards(englishCards, swedishCards),
     ]);
+
+    restartGame();
 
     router.push("/game");
   }
