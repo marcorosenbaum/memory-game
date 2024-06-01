@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 
 const GameContext = createContext();
 
@@ -18,6 +18,22 @@ const GameProvider = ({ children }) => {
   const [selectedCards, setSelectedCards] = useState([]);
   const [players, setPlayers] = useState(initialPlayers);
   const [currentPlayer, setCurrentPlayer] = useState(players.player1);
+  const [gameOver, setGameOver] = useState(false);
+
+  useEffect(() => {
+    if (
+      selectedCards.length !== 0 &&
+      selectedCards.length ===
+        players.player1.matchedCards.length +
+          players.player2.matchedCards.length
+    ) {
+      setGameOver((prevState) => true);
+    }
+  }, [
+    players.player1.matchedCards,
+    players.player2.matchedCards,
+    selectedCards,
+  ]);
 
   const restartGame = (newGame) => {
     setCurrentPlayer(
@@ -31,6 +47,8 @@ const GameProvider = ({ children }) => {
       player1: { ...prevState.player1, matchedCards: [] },
       player2: { ...prevState.player2, matchedCards: [] },
     }));
+
+    setGameOver((prevState) => false);
 
     if (newGame) {
       setSelectedCards((prevState) => []);
@@ -55,6 +73,7 @@ const GameProvider = ({ children }) => {
         restartGame,
         selectedCards,
         setSelectedCards,
+        gameOver,
       }}
     >
       {children}

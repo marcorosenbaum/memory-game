@@ -2,7 +2,6 @@ import { useContext, useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-// import allCards from "../cards";
 import { GameContext } from "../contexts/GameContext";
 
 import classes from "../styles/SetupGame.module.css";
@@ -10,45 +9,8 @@ import classes from "../styles/SetupGame.module.css";
 export default function SetupGame() {
   const router = useRouter();
 
-  const {
-    cards,
-    selectedCards,
-    setSelectedCards,
-    currentPlayer,
-    setCurrentPlayer,
-    players,
-    restartGame,
-  } = useContext(GameContext);
-
-  const englishCards = useMemo(
-    () =>
-      selectedCards.map((card) => ({
-        id: card.id,
-        lang: "english",
-        text: card.text.english,
-
-        flipped: card.flipped,
-        matched: card.matched,
-      })),
-    [selectedCards]
-  );
-  const swedishCards = useMemo(
-    () =>
-      selectedCards.map((card) => ({
-        id: card.id,
-        lang: "swedish",
-        text: card.text.swedish,
-        flipped: card.flipped,
-        matched: card.matched,
-      })),
-    [selectedCards]
-  );
-
-  function createShuffledCards(englishCards, swedishCards) {
-    const allGameCards = [...englishCards, ...swedishCards];
-    const shuffledCards = allGameCards.sort(() => Math.random() - 0.5);
-    return shuffledCards;
-  }
+  const { cards, selectedCards, setSelectedCards, restartGame } =
+    useContext(GameContext);
 
   function handleCardSelection(event) {
     const cardId = event.target.value;
@@ -72,17 +34,7 @@ export default function SetupGame() {
   }
 
   function handleStartGame() {
-    // setCurrentPlayer(
-    //   currentPlayer.name === players.player1.name
-    //     ? players.player2
-    //     : players.player1
-    // );
-    setSelectedCards((prev) => [
-      ...createShuffledCards(englishCards, swedishCards),
-    ]);
-
     restartGame();
-
     router.push("/game");
   }
 
@@ -91,7 +43,6 @@ export default function SetupGame() {
       setSelectedCards((prev) => []);
     }
     const randomCards = [...cards].sort(() => Math.random() - 0.5).slice(0, 6);
-
     setSelectedCards((prev) => [...prev, ...randomCards]);
   }
 

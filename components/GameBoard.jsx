@@ -11,10 +11,52 @@ export default function GameBoard() {
     setPlayers,
     currentPlayer,
     setCurrentPlayer,
+    gameOver,
   } = useContext(GameContext);
 
   const [flippedCards, setFlippedCards] = useState([]);
   const [voices, setVoices] = useState([]);
+  const [gameBoardCards, setGameBoardCards] = useState([]);
+
+  const englishCards = useMemo(
+    () =>
+      selectedCards.map((card) =>
+        card.text.english
+          ? {
+              id: card.id,
+              lang: "english",
+              text: card.text.english,
+              flipped: card.flipped,
+              matched: card.matched,
+            }
+          : null
+      ),
+    [selectedCards]
+  );
+  const swedishCards = useMemo(
+    () =>
+      selectedCards.map((card) => ({
+        id: card.id,
+        lang: "swedish",
+        text: card.text.swedish,
+        flipped: card.flipped,
+        matched: card.matched,
+      })),
+    [selectedCards]
+  );
+
+  function createShuffledCards(englishCards, swedishCards) {
+    const allGameCards = [...englishCards, ...swedishCards];
+    const shuffledCards = allGameCards.sort(() => Math.random() - 0.5);
+    return shuffledCards;
+  }
+
+  useEffect(() => {
+    console.log("render triggered");
+    setGameBoardCards((prev) =>
+      createShuffledCards(englishCards, swedishCards)
+    );
+  }, [gameOver]);
 
   useEffect(() => {
     const fetchVoices = () => {
@@ -53,7 +95,7 @@ export default function GameBoard() {
     if (flippedCards.length === 2) {
       return;
     }
-    const updatedCards = selectedCards.map((card) =>
+    const updatedCards = gameBoardCards.map((card) =>
       card.text === clickedCard.text
         ? { ...card, flipped: !card.flipped }
         : card
@@ -61,25 +103,25 @@ export default function GameBoard() {
     setFlippedCards((prev) => {
       return [...prev, clickedCard];
     });
-    setSelectedCards((prev) => {
+    setGameBoardCards((prev) => {
       return updatedCards;
     });
   };
 
   function flipCardsBack() {
-    const updatedCards = selectedCards.map((card) => {
+    const updatedCards = gameBoardCards.map((card) => {
       if (card.flipped && !card.matched) {
         return { ...card, flipped: false };
       }
       return card;
     });
-    setSelectedCards(updatedCards);
+    setGameBoardCards(updatedCards);
     setFlippedCards([]);
   }
 
   function handleMatchButton() {
     if (flippedCards[0].id === flippedCards[1].id) {
-      const updatedCards = selectedCards.map((card) => {
+      const updatedCards = gameBoardCards.map((card) => {
         if (
           card.text === flippedCards[0].text ||
           card.text === flippedCards[1].text
@@ -88,7 +130,7 @@ export default function GameBoard() {
         }
         return card;
       });
-      setSelectedCards((prev) => {
+      setGameBoardCards((prev) => {
         return updatedCards;
       });
 
@@ -100,7 +142,7 @@ export default function GameBoard() {
               ...prev.player1,
               matchedCards: [
                 ...prev.player1.matchedCards,
-                selectedCards.filter((card) => card.id === flippedCards[0].id),
+                gameBoardCards.filter((card) => card.id === flippedCards[0].id),
               ],
             },
           };
@@ -111,7 +153,7 @@ export default function GameBoard() {
               ...prev.player2,
               matchedCards: [
                 ...prev.player2.matchedCards,
-                selectedCards.filter((card) => card.id === flippedCards[0].id),
+                gameBoardCards.filter((card) => card.id === flippedCards[0].id),
               ],
             },
           };
@@ -143,8 +185,8 @@ export default function GameBoard() {
   return (
     <div>
       <ul className={classes["card-grid"]}>
-        {selectedCards &&
-          selectedCards.map((card) => (
+        {gameBoardCards &&
+          gameBoardCards.map((card) => (
             <li key={card.text} className={card.matched ? classes.hidden : ""}>
               <button
                 disabled={card.flipped || flippedCards.length === 2}

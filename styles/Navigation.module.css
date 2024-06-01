@@ -1,0 +1,18 @@
+.navbar {
+  padding: 1rem 5rem;
+  background-color: #ffb039;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  margin: 0 -5rem;
+}
+
+.navbar a {
+  text-decoration: none;
+  margin-right: 1rem;
+}
+
+.navbar a:hover {
+  color: #be0000;
+  cursor: pointer;
+}

@@ -10,21 +10,13 @@ import classes from "../../styles/Game.module.css";
 
 export default function Game() {
   const router = useRouter();
-  const { selectedCards } = useContext(GameContext);
+  const { selectedCards, gameOver } = useContext(GameContext);
 
   useEffect(() => {
     if (selectedCards.length === 0) {
       router.push("/");
     }
   }, [selectedCards, router]);
-
-  const gameOver = useMemo(
-    () =>
-      selectedCards && selectedCards.length > 0
-        ? selectedCards.every((card) => card.matched === true)
-        : false,
-    [selectedCards]
-  );
 
   return (
     <div className={classes.container}>
