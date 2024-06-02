@@ -52,7 +52,6 @@ export default function GameBoard() {
   }
 
   useEffect(() => {
-    console.log("render triggered");
     setGameBoardCards((prev) =>
       createShuffledCards(englishCards, swedishCards)
     );

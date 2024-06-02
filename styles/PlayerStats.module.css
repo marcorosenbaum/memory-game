@@ -2,11 +2,12 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
-  gap: 4rem;
+  column-gap: 4rem;
+  flex-wrap: wrap;
 }
 
 .player-container div {
-  width: 50%;
+  width: 45%;
 }
 
 .player-container h1 {

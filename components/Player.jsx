@@ -32,15 +32,11 @@ export default function Player({ playerName }) {
   }
 
   return (
-    <div>
-      <div className={classes.wrapper}>
-        <span
-          className={`${classes.span} ${isEditing ? classes.editable : ""}`}
-        >
-          {editablePlayerName}
-        </span>
-        <button onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
-      </div>
+    <div className={classes.wrapper}>
+      <span className={`${classes.span} ${isEditing ? classes.editable : ""}`}>
+        {editablePlayerName}
+      </span>
+      <button onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
     </div>
   );
 }

@@ -12,7 +12,9 @@ export default function PlayerStats() {
     players.player1.matchedCards.length ===
       players.player2.matchedCards.length &&
     selectedCards &&
-    selectedCards.every((card) => card.matched === true);
+    selectedCards.length ===
+      players.player1.matchedCards.length + players.player2.matchedCards.length;
+  selectedCards.every((card) => card.matched === true);
 
   return (
     <div className={classes["player-container"]}>
