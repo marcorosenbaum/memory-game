@@ -6,7 +6,6 @@ import classes from "../styles/GameBoard.module.css";
 export default function GameBoard() {
   const {
     selectedCards,
-    setSelectedCards,
     players,
     setPlayers,
     currentPlayer,
@@ -15,7 +14,7 @@ export default function GameBoard() {
   } = useContext(GameContext);
 
   const [flippedCards, setFlippedCards] = useState([]);
-  const [voices, setVoices] = useState([]);
+  // const [voices, setVoices] = useState([]);
   const [gameBoardCards, setGameBoardCards] = useState([]);
 
   const englishCards = useMemo(
@@ -52,43 +51,55 @@ export default function GameBoard() {
   }
 
   useEffect(() => {
+    setPlayers((prev) => {
+      return {
+        player1: {
+          ...prev.player1,
+          matchedCards: [],
+        },
+        player2: {
+          ...prev.player2,
+          matchedCards: [],
+        },
+      };
+    });
     setGameBoardCards((prev) =>
       createShuffledCards(englishCards, swedishCards)
     );
   }, [gameOver]);
 
-  useEffect(() => {
-    const fetchVoices = () => {
-      const voiceList = speechSynthesis.getVoices();
-      if (voiceList.length !== 0) {
-        setVoices(voiceList);
-        speechSynthesis.onvoiceschanged = null;
-      }
-    };
-    fetchVoices();
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-      speechSynthesis.onvoiceschanged = fetchVoices;
-    }
-  }, []);
+  // useEffect(() => {
+  //   const fetchVoices = () => {
+  //     const voiceList = speechSynthesis.getVoices();
+  //     if (voiceList.length !== 0) {
+  //       setVoices(voiceList);
+  //       speechSynthesis.onvoiceschanged = null;
+  //     }
+  //   };
+  //   fetchVoices();
+  //   if (speechSynthesis.onvoiceschanged !== undefined) {
+  //     speechSynthesis.onvoiceschanged = fetchVoices;
+  //   }
+  // }, []);
 
-  const speakCardText = (cardText, lang) => {
-    const utterance = new SpeechSynthesisUtterance(cardText);
-    const swedishVoice = voices.find((voice) => voice.lang === "sv-SE");
+  // const speakCardText = (cardText, lang) => {
+  //   const utterance = new SpeechSynthesisUtterance(cardText);
+  //   const swedishVoice = voices.find((voice) => voice.lang === "sv-SE");
 
-    if (swedishVoice && lang === "swedish") {
-      utterance.voice = swedishVoice;
-    } else if (!swedishVoice) {
-      console.warn("Swedish voice not found, using default voice");
-    }
-    speechSynthesis.speak(utterance);
-  };
+  //   if (swedishVoice && lang === "swedish") {
+  //     utterance.voice = swedishVoice;
+  //   } else if (!swedishVoice) {
+  //     console.warn("Swedish voice not found, using default voice");
+  //   }
+  //   speechSynthesis.speak(utterance);
+  // };
 
-  useEffect(() => {
-    if (flippedCards.length > 0) {
-      const lastFlippedCard = flippedCards[flippedCards.length - 1];
-      speakCardText(lastFlippedCard.text, lastFlippedCard.lang);
-    }
-  }, [flippedCards]);
+  // useEffect(() => {
+  //   if (flippedCards.length > 0) {
+  //     const lastFlippedCard = flippedCards[flippedCards.length - 1];
+  //     speakCardText(lastFlippedCard.text, lastFlippedCard.lang);
+  //   }
+  // }, [flippedCards]);
 
   const handleClick = (clickedCard) => {
     if (flippedCards.length === 2) {
